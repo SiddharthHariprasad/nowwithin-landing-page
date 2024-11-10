@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>nowwithin.</title>
+        <link rel="stylesheet" href="./css/style.css" />
+    </head>
+    <body>
+        <div id="videoHolder">
+            <video autoplay muted loop id="bgVideo" class="active">
+                <source src="./video/LogoOnCentreDrone.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+            <img src="./images/PlaceholderImage.png" alt="Placeholder Image" id="fallbackImage" class="inactive" />
+        </div>
+        <h1 id="logo">nowwithin.</h1>
+        <h2 id="text">journey begins soon</h1>
+        <script>
+            // scale the video to fill the screen
+            function adjustVideoSize() {
+                // Get viewport dimensions
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+
+                // Select the video holder
+                const videoHolder = document.getElementById("videoHolder");
+
+                // Check aspect ratio and adjust classes
+                if (width > height) {
+                    // Landscape mode - make the video fit the width
+                    videoHolder.classList.add("fit-width");
+                    videoHolder.classList.remove("fit-height");
+                } else {
+                    // Portrait mode - make the video fit the height
+                    videoHolder.classList.add("fit-height");
+                    videoHolder.classList.remove("fit-width");
+                }
+            }
+
+            // Run the function on load and on resize
+            adjustVideoSize();
+            window.addEventListener("resize", adjustVideoSize);
+
+            // Handle video loading error and replace with image
+            const video = document.getElementById("bgVideo");
+            const image = document.getElementById("fallbackImage");
+
+            video.onerror = function () {
+                // const videoHolder = document.getElementById("videoHolder");
+                // Remove the video element and add an image as fallback
+                // videoHolder.innerHTML = '<img src="./images/PlaceholderImage.png" alt="Placeholder Image" id="fallbackImage" />';
+                image.classList.add("active");
+            };
+
+            video.addEventListener('loadeddata', (e) => {
+                //Video should now be loaded but we can add a second check
+                if(video.readyState >= 3){
+                    //your code goes here
+                    image.classList.remove("active");
+                    image.classList.add("inactive");
+                }
+            });
+        </script>
+    </body>
+</html>
